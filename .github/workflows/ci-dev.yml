@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   ci:
@@ -64,7 +64,7 @@ jobs:
           # be deployed to ECS.
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --build-arg BACKEND_API=$BACKEND_API
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"   
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Set server name to nginx
         id: env-nginx-dev
@@ -72,19 +72,19 @@ jobs:
           SERVER_NAME: ${{ secrets.FRONT_URL_DEV }}
         run: |
           sed -i "s|<server_name>|$SERVER_NAME|g" nginx.conf
-            
+
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
-          container-name: ras-frontend-dev
+          container-name: aws-web
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ras-frontend-dev-service
-          cluster: ras-dev
+          service: aws-web
+          cluster: aws-cluster-test
           wait-for-service-stability: true

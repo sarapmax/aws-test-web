@@ -1,30 +1,30 @@
 {
-    "family": "ras-frontend-dev",
-    "executionRoleArn": "arn:aws:iam::215023703764:role/ecsTaskExecutionRole",
-    "taskRoleArn": "arn:aws:iam::215023703764:role/ecsTaskExecutionRole",
-    "networkMode": "awsvpc", 
+    "family": "aws-web-test",
+    "executionRoleArn": "arn:aws:iam::576731930155:role/ecsTaskExcecutionRole",
+    "taskRoleArn": "arn:aws:iam::576731930155:role/ecsTaskExcecutionRole",
+    "networkMode": "awsvpc",
     "containerDefinitions": [
         {
-            "name": "ras-frontend-dev",
-            "image": "215023703764.dkr.ecr.ap-southeast-1.amazonaws.com/ras-frontend-dev:latest",
+            "name": "aws-web",
+            "image": "576731930155.dkr.ecr.ap-southeast-1.amazonaws.com/test-frontend:latest",
             "portMappings": [
                 {
                     "containerPort": 80,
-                    "hostPort": 80, 
+                    "hostPort": 80,
                     "protocol": "tcp"
                 }
             ],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "ras-frontend-dev",
+                    "awslogs-group": "aws-web-test-log",
                     "awslogs-region": "ap-southeast-1",
-                    "awslogs-stream-prefix": "ras-frontend-dev"
+                    "awslogs-stream-prefix": "foobar"
                 }
             },
             "essential": true
         }
-    ], 
+    ],
     "cpu": "256",
     "memory": "512",
     "requiresCompatibilities": [
