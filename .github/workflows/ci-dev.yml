@@ -55,7 +55,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ras-frontend-dev
+          ECR_REPOSITORY: test-frontend
           IMAGE_TAG: ${{ github.sha }}
           BACKEND_API: ${{ secrets.BACKEND_API }}
         run: |
