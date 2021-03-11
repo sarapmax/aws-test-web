@@ -1,6 +1,6 @@
 # Risk Accessment System built with NUXT.JS
 
-## Build Setup
+## Build Setup Foobar
 
 ```bash
 # install dependencies
